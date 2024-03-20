@@ -16,10 +16,12 @@ module.exports = (sequelize, DataTypes)=>{
         stock:{
             type :DataTypes.INTEGER,
             allownull:false
-        }  
+        },
+        createdBy:{
+            type:DataTypes.STRING,
+            allowNull:false 
+          }  
     },
-    {
-        timestamps: false  
-    })
+    )
     return Books ;
 }

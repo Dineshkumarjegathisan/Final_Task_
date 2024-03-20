@@ -3,14 +3,15 @@ const {v4:uuidv4} = require('uuid')
 
 async function createBook(req,res){
     try {
+        const role = req.userMail.role ;
         const reqBody = {
             bookId :uuidv4(),
             bookName: req.body.bookName,
             bookPrice : req.body.bookPrice,
             stock : req.body.stock,
+            createdBy:role
         }
-        console.log(reqBody);
-        const response = await BookService.createBook(reqBody)
+        const response = await BookService.createBook(reqBody ,role)
         res.status(201)
         .json({
             response 

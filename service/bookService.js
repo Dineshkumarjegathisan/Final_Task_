@@ -2,10 +2,10 @@ const connectToDb = require('../connection/db_config.js')
 
 
 
-async function createBook(reqBody){
+async function createBook(reqBody,role){
     try {
-        const {Books} =  await connectToDb();
-        const result = await Books.create(reqBody)
+        const {Books} =  await connectToDb();//models config from sequelize 
+        const result = await Books.create(reqBody , role)
         return result ;
     } catch (err) {
         throw err ;
@@ -51,7 +51,6 @@ async function getAllBooks(limit,offset){
 async function updateBookById(reqBody ){
     try {
         const {Books} =  await connectToDb();
-        
         const result = await Books.update(
              {
                 bookName:reqBody.bookName,
@@ -70,7 +69,6 @@ async function updateBookById(reqBody ){
 async function deleteBookById(id){
     try {
         const {Books} =  await connectToDb();
-        console.log('ID' +id);
         const result = await Books.destroy({
             where:{
                 bookId:id
@@ -92,6 +90,9 @@ async function getbookByName(search){
                       }
             }
         })
+        if(result == null){
+            return 'book not found'
+        }
         return result ;
     } catch (err) {
         throw err ;

@@ -1,12 +1,13 @@
 const connectToDb = require('../connection/db_config.js')
 const userValidation = require('../validation/userValidation.js')
 const jwt = require('jsonwebtoken');
-const {Books ,Users} =  connectToDb();
+
 
 
 
 async function userRegister(userInfo){
     try {
+        const {Books ,Users} = await connectToDb();
         const result = await Users.create(userInfo)
         return result ;
     } catch (err) {
@@ -16,6 +17,7 @@ async function userRegister(userInfo){
 
 async function userLogin(email,password){
     try {
+        const {Books ,Users} = await connectToDb();
        const userMail = await userValidation.mailValidation(email,password)
        if(userMail.length==0){
          return ('user not found')
